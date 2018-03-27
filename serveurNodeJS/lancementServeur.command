@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /Users/fguntz/Documents/MESCOURS-S2/TP-Projet/prototype/serveurNODE_JS
+cd /Users/fguntz/Documents/Gitkraken/canvas-Kontrol/serveurNodeJS/
 node index.js
