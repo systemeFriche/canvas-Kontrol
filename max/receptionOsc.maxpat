@@ -45,7 +45,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 533.5, 527.0, 50.0, 22.0 ],
+					"patching_rect" : [ 508.5, 352.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -57,7 +57,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 533.5, 462.354004, 97.0, 22.0 ],
+					"patching_rect" : [ 508.5, 287.354004, 97.0, 22.0 ],
 					"style" : "",
 					"text" : "OSC-route /gain"
 				}
@@ -72,7 +72,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 118.5, 537.0, 50.0, 22.0 ],
+					"patching_rect" : [ 93.5, 362.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -85,7 +85,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 401.5, 527.0, 50.0, 22.0 ],
+					"patching_rect" : [ 376.5, 352.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -97,7 +97,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 401.5, 462.354004, 97.0, 22.0 ],
+					"patching_rect" : [ 376.5, 287.354004, 97.0, 22.0 ],
 					"style" : "",
 					"text" : "OSC-route /gain"
 				}
@@ -135,7 +135,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 176.0, 537.0, 24.0, 24.0 ],
+					"patching_rect" : [ 151.0, 362.0, 24.0, 24.0 ],
 					"style" : ""
 				}
 
@@ -148,7 +148,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 280.5, 527.0, 50.0, 22.0 ],
+					"patching_rect" : [ 255.5, 352.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -160,7 +160,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 280.5, 462.354004, 97.0, 22.0 ],
+					"patching_rect" : [ 255.5, 287.354004, 97.0, 22.0 ],
 					"style" : "",
 					"text" : "OSC-route /gain"
 				}
@@ -173,7 +173,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
-					"patching_rect" : [ 118.5, 462.354004, 134.0, 22.0 ],
+					"patching_rect" : [ 93.5, 287.354004, 134.0, 22.0 ],
 					"style" : "",
 					"text" : "OSC-route /gain /effet1"
 				}
@@ -318,10 +318,6 @@
 
 			}
  ],
-		"parameters" : 		{
-
-		}
-,
 		"dependency_cache" : [ 			{
 				"name" : "OSC-route.mxo",
 				"type" : "iLaX"
