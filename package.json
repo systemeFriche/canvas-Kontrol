@@ -1,0 +1,22 @@
+{
+  "name": "objectsKontrol",
+  "version": "0.2.0",
+  "description": "Ensemble d'interfaces HTML",
+  "author": "Fabien Guntz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/systemeFriche/objectsKontrol.git"
+  },
+  "readmeFilename": "README.md",
+  "bugs": "https://github.com/systemeFriche/objectsKontrol/issues",
+  "license": "(MIT OR GPL-2.0)",
+  "keywords": [
+    "interface",
+    "HTML"
+  ],
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^3.1.0"
+  }
+}
