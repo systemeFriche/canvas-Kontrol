@@ -18,7 +18,7 @@ Chaque objet d'interface est paramétrable à l'aide d'attributs de la balise ca
 
 ###Knob
 
-![knob](./images/knob.png)
+![knob](./doc/images/knob.png)
 
 * **width** : en pixels
 * **height** : en pixels. Attention la hauteur doit être égale à la largeur. 
@@ -34,7 +34,7 @@ Chaque objet d'interface est paramétrable à l'aide d'attributs de la balise ca
  
  ###Toggle
 
-![toggle](./images/toggle.png)
+![toggle](./doc/images/toggle.png)
 
 * **width** : en pixels
 * **height** : en pixels. Attention la hauteur doit être égale à la largeur. 
@@ -45,7 +45,7 @@ Chaque objet d'interface est paramétrable à l'aide d'attributs de la balise ca
 
  ###Toggle
 
-![bang](./images/bang.png)
+![bang](./doc/images/bang.png)
 
 * **width** : en pixels
 * **height** : en pixels. Attention la hauteur doit être égale à la largeur. 
@@ -55,7 +55,7 @@ Chaque objet d'interface est paramétrable à l'aide d'attributs de la balise ca
 
  ###Slider
 
-![slider](./images/slider.png)
+![slider](./doc/images/slider.png)
 
 * **width** : en pixels
 * **height** : en pixels. Attention la hauteur doit être le triple de la largeur. 

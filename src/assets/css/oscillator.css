@@ -1,21 +1,3 @@
-body {
-    font: normal 90% "Trebuchet MS",Verdana,"Lucida Grande",Tahoma,Arial,Helvetica,Sans-Serif;
-    color: #DDD;
-    background: #111111;
-    padding:0 0 0 0;
-    margin:0;
-}
-
-* {
-    padding:0;
-    margin:0;
-}
-
-#container {
-    display: flex;
-    flex-direction : column;
-}
-
 .oscillator {
     display: flex;
     flex-direction : row;
