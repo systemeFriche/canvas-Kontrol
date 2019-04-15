@@ -61,9 +61,8 @@ class ObjectsKontrol{
                     "scaleX":parseFloat(sliderDom.dataset.width/100.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
                     "scaleY":parseFloat(sliderDom.dataset.height/300.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
                     "couleur":sliderDom.dataset.couleur,
-                    "onvaluechange":function(){},
-                    //"onvaluechange":function(val){this.changeAmplitude(val)},
-                    "contextAudio":contextAudio
+                    "contextAudio":contextAudio,
+                    "onvaluechange":function(){}
                 });
             }
             else {
@@ -81,7 +80,7 @@ class ObjectsKontrol{
                     "scaleX":parseFloat(sliderDom.dataset.width/100.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
                     "scaleY":parseFloat(sliderDom.dataset.height/300.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
                     "couleur":sliderDom.dataset.couleur,
-                    //"onvaluechange":function(adresseOsc,typeVal,val){envoiValeurOsc(adresseOsc,typeVal,val)},
+                    "onvaluechange":function(param){sendValueOsc(param)},
                     "adresseOsc":sliderDom.dataset.adresseOsc
                 });
             }
@@ -121,9 +120,8 @@ class ObjectsKontrol{
                 "height":knobDom.dataset.width,
                 "scale":parseFloat(knobDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "couleur":knobDom.dataset.couleur,
-                //"onvaluechange":function(adresseOsc,typeVal,val){envoiValeurOsc(adresseOsc,typeVal,val)},
-                "adresseOsc":knobDom.dataset.adresseOsc
-
+                "adresseOsc":knobDom.dataset.adresseOsc,
+                "onvaluechange":function(param){sendValueOsc(param)}
             });
 
             knob.initInterface();
@@ -151,8 +149,9 @@ class ObjectsKontrol{
                 "scale":parseFloat(bangDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":bangDom.dataset.styleBorder,
                 "couleur":bangDom.dataset.couleur,
-                //"onvaluechange":function(adresseOsc,typeVal,val){envoiValeurOsc(adresseOsc,typeVal,val)},
-                "adresseOsc":bangDom.dataset.adresseOsc
+                "adresseOsc":bangDom.dataset.adresseOsc,
+                "onvaluechange":function(adresseOsc,typeVal,val){sendValueOsc(adresseOsc,typeVal,val)}
+
 
             });
 
@@ -180,8 +179,9 @@ class ObjectsKontrol{
                 "scale":parseFloat(toggleDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":toggleDom.dataset.styleBorder,
                 "couleur":toggleDom.dataset.couleur,
-                //"onvaluechange":function(adresseOsc,typeVal,val){envoiValeurOsc(adresseOsc,typeVal,val)},
-                "adresseOsc":toggleDom.dataset.adresseOsc
+                "adresseOsc":toggleDom.dataset.adresseOsc,
+                "onvaluechange":function(param){sendValueOsc(param)}
+
 
             });
             toggle.initInterface();
@@ -210,8 +210,8 @@ class ObjectsKontrol{
                     "scale":parseFloat(outDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                     "styleBorder":outDom.dataset.styleBorder,
                     "couleur":outDom.dataset.couleur,
-                    //"onvaluechange":function(adresseOsc,typeVal,val){envoiValeurOsc(adresseOsc,typeVal,val)},
-                    "contextAudio":contextAudio
+                    "contextAudio":contextAudio,
+                    "onvaluechange":function(){},
                 });
             }
             else{
@@ -224,8 +224,9 @@ class ObjectsKontrol{
                     "scale":parseFloat(outDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                     "styleBorder":outDom.dataset.styleBorder,
                     "couleur":outDom.dataset.couleur,
-                    //"onvaluechange":function(adresseOsc,typeVal,val){envoiValeurOsc(adresseOsc,typeVal,val)},
-                    "adresseOsc":outDom.dataset.adresseOsc
+                    "adresseOsc":outDom.dataset.adresseOsc,
+                    "onvaluechange":function(param){sendValueOsc(param)}
+
                 });
             }
 
@@ -257,9 +258,8 @@ class ObjectsKontrol{
                     "valeurMaxAmpl":oscillatorDom.dataset.valeurMaxAmpl,
                     "amplitude":oscillatorDom.dataset.amplitude,
                     "scale":parseFloat(oscillatorDom.height/100.0),//la hauteur de base vaut 100 pixels
-                    //on n'en a pas besoin
-                    //"adresseOsc":oscillatorDom.dataset.adresseOsc
-                    "contextAudio":contextAudio
+                    "contextAudio":contextAudio,
+                    "onvaluechange":function(){},
                 });
             }
             else {
@@ -274,8 +274,8 @@ class ObjectsKontrol{
                     "valeurMaxAmpl":oscillatorDom.dataset.valeurMaxAmpl,
                     "amplitude":oscillatorDom.dataset.amplitude,
                     "scale":parseFloat(oscillatorDom.height/100.0),//la hauteur de base vaut 100 pixels
-                    "adresseOsc":oscillatorDom.dataset.adresseOsc
-                    //"onvaluechange":function(adresseOsc,typeVal,val){envoiValeurOsc(adresseOsc,typeVal,val)},
+                    "adresseOsc":oscillatorDom.dataset.adresseOsc,
+                    "onvaluechange":function(param){sendValueOsc(param)}
 
                 });
             }
