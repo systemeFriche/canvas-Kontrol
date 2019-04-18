@@ -63,7 +63,14 @@ class Toggle
         else{
             this.setEtatToggle(1);
         }
-        this.onValueChange(this.adresseOsc,"i",this.etatToggle);
+
+        let param = {
+            "adresseOsc":this.adresseOsc,
+            "typeVal":"i",
+            "value":this.etatToggle
+        };
+
+        this.onValueChange(param);
     }
 
     drawToggle()

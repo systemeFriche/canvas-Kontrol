@@ -5,11 +5,12 @@
   <title>Test Web Audio API</title>
   <!-- Feuille de styles génériques -->
   <link rel="stylesheet" href="./css/style.css" type="text/css">
-  <link rel="stylesheet" href="../../build/css/objectsKontrol.min.css" type="text/css">
+    <!-- Feuille de styles objectsKontrol -->
+  <link rel="stylesheet" href="../src/assets/css/oscillator.css" type="text/css">
 </head>
 
 <body>
-    <div id="container">
+    <div id="container" data-web-socket-server="192.168.0.15" data-web-socket-port="7474">
         <div id="bouton1" class="knob" data-legende="Bouton 1" data-width="100" data-style-border="dashed 1px #444" data-couleur="0,255,0"
              data-angle-depart="30" data-angle-arrivee="330" data-valeur-min="0.5" data-valeur-max="1.5" data-valeur-init="1" data-adresse-osc="/1/gain"
              data-type-val="f">
@@ -36,7 +37,11 @@
         <div id="out1" class="out" data-width="100" data-height="100" data-style-border="dashed 1px #444">
         </div>
     </div>
-    <script src="../../build/js/objectsKontrol.min.js"></script>
-    <script src="./js/main.js"></script>
+
+    <!-- Mise en place module OSC -->
+    <script src="../node_modules/osc/dist/osc.js"></script>
+    <!-- Mise en place de RequireJs -->
+    <script data-main="js/main.js" src="js/require.js"></script>
+
 </body>
 </html>

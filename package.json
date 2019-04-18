@@ -14,10 +14,19 @@
     "interface",
     "HTML"
   ],
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    "osc": "^2.2.4"
+  },
   "devDependencies": {
     "gulp": "^4.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-minify": "^3.1.0"
+    "gulp-minify": "^3.1.0",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-merge": "^4.2.1"
   }
 }

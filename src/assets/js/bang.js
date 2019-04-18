@@ -50,7 +50,12 @@ class Bang
     {
         this.drawCercle();
         this.drawBang();
-        this.onValueChange(this.adresseOsc,"i","1");
+        let param = {
+            "adresseOsc":this.adresseOsc,
+            "typeVal":"i",
+            "value":"1"
+        };
+        this.onValueChange(param);
         //on efface 100 ms plus tard
         setTimeout(function(){this.drawCercle()}.bind(this), 100);
     }

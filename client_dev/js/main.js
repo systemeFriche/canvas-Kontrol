@@ -1,7 +1,6 @@
 requirejs.config({
-    baseUrl: '../../../src/assets/js',
+    baseUrl: '../src/assets/js',
     //Gestion des dépendances
-    //objectsKontrol/...js un peu bourrin, comment faire de manière plus élégante, notion de package ?
     shim: {
         'oscillatorAudio':['oscillator'],
         'sliderAudio':['slider'],
@@ -12,8 +11,10 @@ requirejs.config({
 });
 
 // Start the main app logic.
-requirejs(['objectsKontrol'],
+requirejs(['objectsKontrol','osc'],
     function () {
+
+        //Il faudrait ajouter test si connexion OSC en place
 
         function initInterface(){
 

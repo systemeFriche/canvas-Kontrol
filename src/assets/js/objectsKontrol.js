@@ -11,10 +11,22 @@
  * Big Thanks to Anne-Marie Puizillout
  */
 
-
 class ObjectsKontrol{
 
-    constructor() {
+    constructor(contextAudio) {
+        if(contextAudio){
+            this.contextAudio=contextAudio;
+            this.paramContext = {
+                "contextAudio":contextAudio,
+                "onvaluechange":function(){}
+            };
+        }else{
+            this.paramContext = {
+                "onvaluechange":function(param){sendValueOsc(param)}
+            };
+            //lancer fonction création ws
+            //comment passer adresse et port du serveur avec qui on ouvre une webSocket ?
+        }
         this.collSliders = [];
         this.collKnobs = [];
         this.collBangs = [];
@@ -23,18 +35,18 @@ class ObjectsKontrol{
         this.collOscillators = [];
     }
 
-    loadObjects(contextAudio){
+    loadObjects(){
         //un oscillateur est composé de knobs, il faut donc d'abord charger les oscillateurs avant les knobs
-        this.loadOscillators(contextAudio);
+        this.loadOscillators();
         this.loadBangs();
         this.loadKnobs();
-        this.loadSliders(contextAudio);
+        this.loadSliders();
         this.loadToggles();
-        this.loadOuts(contextAudio);
+        this.loadOuts();
     }
 
-    configureObjects(contextAudio){
-        this.configureOscillators(contextAudio);
+    configureObjects(){
+        this.configureOscillators();
     }
 
     loadSliders(contextAudio){
@@ -46,49 +58,38 @@ class ObjectsKontrol{
             //pour chaque objet du DOM de la classe slider on crée un objet javascript slider
             let slider;
 
-            if (contextAudio) {
-                slider = new SliderAudio({
-                    "elementDom":sliderDom,
-                    "id":sliderDom.id,
-                    "legende":sliderDom.dataset.legende,
-                    "typeVal":sliderDom.dataset.typeVal,
-                    "valeurMin": sliderDom.dataset.valeurMin,
-                    "valeurMax":sliderDom.dataset.valeurMax,
-                    "width":sliderDom.dataset.width,
-                    "height":sliderDom.dataset.height,
-                    "styleBorder":sliderDom.dataset.styleBorder,
-                    "valeur":parseFloat(sliderDom.dataset.valeurInit),
-                    "scaleX":parseFloat(sliderDom.dataset.width/100.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
-                    "scaleY":parseFloat(sliderDom.dataset.height/300.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
-                    "couleur":sliderDom.dataset.couleur,
-                    "contextAudio":contextAudio,
-                    "onvaluechange":function(){}
-                });
+            let paramObject ={
+                "elementDom":sliderDom,
+                "id":sliderDom.id,
+                "legende":sliderDom.dataset.legende,
+                "typeVal":sliderDom.dataset.typeVal,
+                "valeurMin": sliderDom.dataset.valeurMin,
+                "valeurMax":sliderDom.dataset.valeurMax,
+                "width":sliderDom.dataset.width,
+                "height":sliderDom.dataset.height,
+                "styleBorder":sliderDom.dataset.styleBorder,
+                "valeur":parseFloat(sliderDom.dataset.valeurInit),
+                "scaleX":parseFloat(sliderDom.dataset.width/100.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
+                "scaleY":parseFloat(sliderDom.dataset.height/300.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
+                "couleur":sliderDom.dataset.couleur,
+            };
+
+            if (!this.contextAudio) {
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":sliderDom.dataset.adresseOsc});
             }
-            else {
-                slider = new Slider({
-                    "elementDom":sliderDom,
-                    "id":sliderDom.id,
-                    "legende":sliderDom.dataset.legende,
-                    "typeVal":sliderDom.dataset.typeVal,
-                    "valeurMin": sliderDom.dataset.valeurMin,
-                    "valeurMax":sliderDom.dataset.valeurMax,
-                    "width":sliderDom.dataset.width,
-                    "height":sliderDom.dataset.height,
-                    "styleBorder":sliderDom.dataset.styleBorder,
-                    "valeur":parseFloat(sliderDom.dataset.valeurInit),
-                    "scaleX":parseFloat(sliderDom.dataset.width/100.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
-                    "scaleY":parseFloat(sliderDom.dataset.height/300.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
-                    "couleur":sliderDom.dataset.couleur,
-                    "onvaluechange":function(param){sendValueOsc(param)},
-                    "adresseOsc":sliderDom.dataset.adresseOsc
-                });
+            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+
+            if (this.contextAudio){
+                slider = new SliderAudio(paramObject);
             }
+            else{
+                slider = new Slider(paramObject);
+            }
+
 
             slider.initInterface();
             //ATTENTION penser à envoyer la valeur initiale si OSC
 
-            //slider.drawSlider();
             //on ajoute le nouvel objet au tableau de sliders
             this.collSliders.push(slider);
             //on envoie la valeur initiale pour MAX
@@ -106,7 +107,8 @@ class ObjectsKontrol{
         for (let knobDom of collKnobsDom){
             //pour chaque objet du DOM de la classe knob on crée un objet javascript knob
             let knob;
-            knob = new Knob({
+
+            let paramObject = {
                 "elementDom":knobDom,
                 "id":knobDom.id,
                 "legende":knobDom.dataset.legende,
@@ -120,13 +122,18 @@ class ObjectsKontrol{
                 "height":knobDom.dataset.width,
                 "scale":parseFloat(knobDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "couleur":knobDom.dataset.couleur,
-                "adresseOsc":knobDom.dataset.adresseOsc,
-                "onvaluechange":function(param){sendValueOsc(param)}
-            });
+            };
+
+            if (!this.contextAudio) {
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":knobDom.dataset.adresseOsc});
+            }
+            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+
+            knob = new Knob(paramObject);
 
             knob.initInterface();
             //ATTENTION penser à envoyer la valeur initiale si OSC
-            //knob.drawKnob();
+
             //on ajoute le nouvel objet au tableau des knobs
             this.collKnobs.push(knob);
         }
@@ -140,8 +147,11 @@ class ObjectsKontrol{
         //on récupère tous les objets du DOM de la classe bang
         for (let bangDom of collBangs){
             //pour chaque objet du DOM de la classe bang on crée un objet javascript bang
+
             let bang;
-            bang = new Bang({
+
+            let paramObject ={
+
                 "elementDom":bangDom,
                 "id":bangDom.id,
                 "legende":bangDom.dataset.legende,
@@ -149,13 +159,17 @@ class ObjectsKontrol{
                 "scale":parseFloat(bangDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":bangDom.dataset.styleBorder,
                 "couleur":bangDom.dataset.couleur,
-                "adresseOsc":bangDom.dataset.adresseOsc,
-                "onvaluechange":function(adresseOsc,typeVal,val){sendValueOsc(adresseOsc,typeVal,val)}
+            };
 
+            if (!this.contextAudio) {
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":bangDom.dataset.adresseOsc});
+            }
+            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
-            });
+            bang = new Bang(paramObject);
 
             bang.initInterface();
+
             //ATTENTION penser à envoyer la valeur initiale si OSC
             //on ajoute le nouvel objet au tableau des bangs
             this.collBangs.push(bang);
@@ -171,7 +185,8 @@ class ObjectsKontrol{
         for (let toggleDom of collToggles){
             //pour chaque objet du DOM de la classe toggle on crée un objet javascript toggle
             let toggle;
-            toggle = new Toggle({
+
+            let paramObject ={
                 "elementDom":toggleDom,
                 "legende":toggleDom.dataset.legende,
                 "etatToggle":parseInt(toggleDom.dataset.etatInit),
@@ -179,12 +194,17 @@ class ObjectsKontrol{
                 "scale":parseFloat(toggleDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":toggleDom.dataset.styleBorder,
                 "couleur":toggleDom.dataset.couleur,
-                "adresseOsc":toggleDom.dataset.adresseOsc,
-                "onvaluechange":function(param){sendValueOsc(param)}
+            };
 
+            if (!this.contextAudio) {
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":toggleDom.dataset.adresseOsc});
+            }
+            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
-            });
+            toggle = new Toggle(paramObject);
+
             toggle.initInterface();
+
             //ATTENTION penser à envoyer la valeur initiale si OSC
             //on ajoute le nouvel objet au tableau des toggles
             this.collToggles.push(toggle);
@@ -200,34 +220,27 @@ class ObjectsKontrol{
             //pour chaque objet du DOM de la classe bang on crée un objet javascript bang
             let out;
 
-            if (contextAudio) {
-                out = new OutAudio({
-                    "elementDom":outDom,
-                    "id":outDom.id,
-                    "legende":outDom.dataset.legende,
-                    "width":outDom.dataset.width,
-                    "height":outDom.dataset.height,
-                    "scale":parseFloat(outDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
-                    "styleBorder":outDom.dataset.styleBorder,
-                    "couleur":outDom.dataset.couleur,
-                    "contextAudio":contextAudio,
-                    "onvaluechange":function(){},
-                });
+            let paramObject ={
+                "elementDom":outDom,
+                "id":outDom.id,
+                "legende":outDom.dataset.legende,
+                "width":outDom.dataset.width,
+                "height":outDom.dataset.height,
+                "scale":parseFloat(outDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
+                "styleBorder":outDom.dataset.styleBorder,
+                "couleur":outDom.dataset.couleur,
+            };
+
+            if (!this.contextAudio) {
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":outDom.dataset.adresseOsc});
+            }
+            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+
+            if (this.contextAudio){
+                out = new OutAudio(paramObject);
             }
             else{
-                out = new Out({
-                    "elementDom":outDom,
-                    "id":outDom.id,
-                    "legende":outDom.dataset.legende,
-                    "width":outDom.dataset.width,
-                    "height":outDom.dataset.height,
-                    "scale":parseFloat(outDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
-                    "styleBorder":outDom.dataset.styleBorder,
-                    "couleur":outDom.dataset.couleur,
-                    "adresseOsc":outDom.dataset.adresseOsc,
-                    "onvaluechange":function(param){sendValueOsc(param)}
-
-                });
+                out = new Out(paramObject);
             }
 
             out.initInterface();
@@ -246,39 +259,31 @@ class ObjectsKontrol{
             //pour chaque objet du DOM de la classe oscillator on crée un objet javascript oscillator
             let oscillator;
 
-            if (contextAudio) {
-                oscillator = new OscillatorAudio({
-                    "elementDom":oscillatorDom,
-                    "id":oscillatorDom.id,
-                    "type":oscillatorDom.dataset.type,
-                    "valeurMinFreq": oscillatorDom.dataset.valeurMinFreq,
-                    "valeurMaxFreq":oscillatorDom.dataset.valeurMaxFreq,
-                    "frequency":oscillatorDom.dataset.frequency,
-                    "valeurMinAmpl": oscillatorDom.dataset.valeurMinAmpl,
-                    "valeurMaxAmpl":oscillatorDom.dataset.valeurMaxAmpl,
-                    "amplitude":oscillatorDom.dataset.amplitude,
-                    "scale":parseFloat(oscillatorDom.height/100.0),//la hauteur de base vaut 100 pixels
-                    "contextAudio":contextAudio,
-                    "onvaluechange":function(){},
-                });
-            }
-            else {
-                oscillator = new Oscillator({
-                    "elementDom":oscillatorDom,
-                    "id":oscillatorDom.id,
-                    "type":oscillatorDom.dataset.type,
-                    "valeurMinFreq": oscillatorDom.dataset.valeurMinFreq,
-                    "valeurMaxFreq":oscillatorDom.dataset.valeurMaxFreq,
-                    "frequency":oscillatorDom.dataset.frequency,
-                    "valeurMinAmpl": oscillatorDom.dataset.valeurMinAmpl,
-                    "valeurMaxAmpl":oscillatorDom.dataset.valeurMaxAmpl,
-                    "amplitude":oscillatorDom.dataset.amplitude,
-                    "scale":parseFloat(oscillatorDom.height/100.0),//la hauteur de base vaut 100 pixels
-                    "adresseOsc":oscillatorDom.dataset.adresseOsc,
-                    "onvaluechange":function(param){sendValueOsc(param)}
+            let paramObject ={
+                "elementDom":oscillatorDom,
+                "id":oscillatorDom.id,
+                "type":oscillatorDom.dataset.type,
+                "valeurMinFreq": oscillatorDom.dataset.valeurMinFreq,
+                "valeurMaxFreq":oscillatorDom.dataset.valeurMaxFreq,
+                "frequency":oscillatorDom.dataset.frequency,
+                "valeurMinAmpl": oscillatorDom.dataset.valeurMinAmpl,
+                "valeurMaxAmpl":oscillatorDom.dataset.valeurMaxAmpl,
+                "amplitude":oscillatorDom.dataset.amplitude,
+                "scale":parseFloat(oscillatorDom.height/100.0),//la hauteur de base vaut 100 pixels
+            };
 
-                });
+            if (!this.contextAudio) {
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":oscillatorDom.dataset.adresseOsc});
             }
+            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+
+            if (this.contextAudio){
+                oscillator = new OscillatorAudio(paramObject);
+            }
+            else{
+                oscillator = new Oscillator(paramObject);
+            }
+
             oscillator.initInterface();
             //ATTENTION penser à envoyer la valeur initiale si OSC
             //on ajoute le nouvel objet au tableau des oscillators
@@ -334,5 +339,12 @@ class ObjectsKontrol{
                 break;
             }
         }
+    }
+
+    static jsonConcat(o1, o2) {
+        for (var key in o2) {
+            o1[key] = o2[key];
+        }
+        return o1;
     }
 }
