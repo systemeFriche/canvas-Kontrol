@@ -32,7 +32,7 @@ requirejs(['objectsKontrol','wsLink'],
         //bout de code à remplacer par un promise
         function checkConnexionState() {
             if(wsLink1.ws.connexionState === false) {
-                window.setTimeout(checkConnexionState, 100); /* this checks the flag every 100 milliseconds*/
+                window.setTimeout(checkConnexionState, 100);
             } else {
                 wsLink1.ws.receptionMessageOsc=function(oscMsg){
                     console.log("Received from server: ", oscMsg);

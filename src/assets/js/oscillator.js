@@ -122,8 +122,6 @@ class Oscillator {
                     let knobFreqDom=document.createElement('div');
                     knobFreqDom.id=this.id+"-knobFreq";
                     knobFreqDom.className="knob";
-                    //knobFreqDom.width=80;
-                    //knobFreqDom.height=80;
                     knobFreqDom.setAttribute("data-width", "80");
                     knobFreqDom.setAttribute("data-height", "80");
                     knobFreqDom.setAttribute("data-couleur", "0,255,0");
@@ -133,6 +131,7 @@ class Oscillator {
                     knobFreqDom.setAttribute("data-valeur-max", this.valeurMaxFreq);
                     knobFreqDom.setAttribute("data-valeur-init", this.frequency);
                     knobFreqDom.setAttribute("data-type-val", this.typeVal);
+                    knobFreqDom.setAttribute("data-adresse-osc", this.adresseOsc+"/freq");
                     paramFreqDom.appendChild(knobFreqDom);
                 //Le bloc amplitude
                 let paramAmplDom=document.createElement('li');
@@ -145,8 +144,6 @@ class Oscillator {
                     let knobAmplDom=document.createElement('div');
                     knobAmplDom.id=this.id+"-knobAmpl";
                     knobAmplDom.className="knob";
-                    //knobAmplDom.width=80;
-                    //knobAmplDom.height=80;
                     knobAmplDom.setAttribute("data-width", "80");
                     knobAmplDom.setAttribute("data-height", "80");
                     knobAmplDom.setAttribute("data-couleur", "0,255,0");
@@ -156,7 +153,7 @@ class Oscillator {
                     knobAmplDom.setAttribute("data-valeur-max", this.valeurMaxAmpl);
                     knobAmplDom.setAttribute("data-valeur-init", this.amplitude);
                     knobAmplDom.setAttribute("data-type-val", this.typeVal);
-                    //knobAmplDom.addEventListener("onValueChange",this.changeType.bind(this,'square'));
+                    knobAmplDom.setAttribute("data-adresse-osc", this.adresseOsc+"/ampl");
                     paramAmplDom.appendChild(knobAmplDom);
 
         //le bloc minifier
@@ -238,21 +235,34 @@ class Oscillator {
 
     on() {
         //envoi message Osc pour indiquer qu'on veut jouer le son de l'oscillateur
+        let param = {
+            "adresseOsc":this.adresseOsc+"/on",
+            "typeVal":"i",
+            "value":1
+        };
+        this.onValueChange(param);
     }
 
     off() {
         //envoi message Osc pour indiquer qu'on veut stopper le son de l'oscillateur
+        let param = {
+            "adresseOsc":this.adresseOsc+"/on",
+            "typeVal":"i",
+            "value":0
+        };
+        this.onValueChange(param);
     }
 
     switchOnOff(){
         if(this.etatActive){
-            this.off();
             this.etatActive=false;
+            this.off();
         }
         else{
-            this.on();
             this.etatActive=true;
+            this.on();
         }
+        this.drawOscillator();
     }
 
     changeType(type){
@@ -261,12 +271,32 @@ class Oscillator {
         //à voir si besoin des deux lignes suivantes
         //this.off();
         //this.on();
+        let value;
+        switch(this.type) {
+            case 'sine':
+                value=0;
+                break;
+            case 'triangle' :
+                value=1;
+                break;
+            case 'sawtooth':
+                value=2;
+                break;
+            case 'square':
+                value=3;
+                break;
+            default:
+                value=0;
+        }
+        let param = {
+            "adresseOsc":this.adresseOsc+"/type",
+            "typeVal":"i",
+            "value":value
+        };
+        this.onValueChange(param);
         this.drawOscillator();
     }
 
-    changeAmplitude(amplitude) {
-        //envoi un message Osc pour indiquer qu'on veut changer l'amplitude de l'oscillateur'
-    }
 }
 
 
