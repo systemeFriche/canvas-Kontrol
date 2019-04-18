@@ -30,7 +30,7 @@ class OutAudio extends Out {
         this.contextAudio.resume();
         //fade in
         this.gainNode.gain.linearRampToValueAtTime(1, this.contextAudio.currentTime + 0.05);
-        this.etatActive = true;
+        this.activeState = true;
         this.drawOut();
     }
 
@@ -38,7 +38,7 @@ class OutAudio extends Out {
         //fade out
         this.gainNode.gain.linearRampToValueAtTime(0, this.contextAudio.currentTime + 0.05);
         this.contextAudio.suspend();
-        this.etatActive = false;
+        this.activeState = false;
         this.drawOut();
     }
 

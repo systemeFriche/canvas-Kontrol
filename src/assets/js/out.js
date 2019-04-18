@@ -25,7 +25,7 @@ class Out
         this.styleBorder=param.styleBorder;
         this.onValueChange=param.onvaluechange || function(){};
         this.adresseOsc=param.adresseOsc;
-        this.etatActive=false;
+        this.activeState=false;
     }
 
     initInterface() {
@@ -49,27 +49,42 @@ class Out
 
     on() {
         //envoi message Osc pour indiquer qu'on veut activer jouer le son de l'oscillateur
+
+        let param = {
+            "adresseOsc":this.adresseOsc,
+            "typeVal":"i",
+            "value":1
+        };
+        this.onValueChange(param);
     }
 
     off() {
         //envoi message Osc pour indiquer qu'on veut stopper le son de l'oscillateur
+
+        let param = {
+            "adresseOsc":this.adresseOsc,
+            "typeVal":"i",
+            "value":0
+        };
+        this.onValueChange(param);
     }
 
     switchOnOff(){
-        if(this.etatActive){
+        if(this.activeState){
+            this.activeState=false;
             this.off();
-            this.etatActive=false;
         }
         else{
+            this.activeState=true;
             this.on();
-            this.etatActive=true;
         }
+        this.drawOut();
     }
 
     drawOut()
     {
         let lineColor,backgroundColor;
-        lineColor = this.etatActive ? '#A9D8FF' : '#b4b4b4';
+        lineColor = this.activeState ? '#A9D8FF' : '#b4b4b4';
 
         //ajout HP
         this.ctx.beginPath();

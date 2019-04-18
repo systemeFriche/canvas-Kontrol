@@ -26,8 +26,6 @@ class ObjectsKontrol{
             this.paramContext = {
                 "onvaluechange":function(param){element.sendValueOsc(param)}
             };
-            //lancer fonction création ws
-            //comment passer adresse et port du serveur avec qui on ouvre une webSocket ?
         }
         this.collSliders = [];
         this.collKnobs = [];
@@ -53,7 +51,7 @@ class ObjectsKontrol{
         this.configureOscillators();
     }
 
-    loadSliders(contextAudio){
+    loadSliders(){
         //on crée tous les objets Slider présents dans le DOM
         let collSlidersDom = document.querySelectorAll(".slider");
 
@@ -66,7 +64,6 @@ class ObjectsKontrol{
                 "elementDom":sliderDom,
                 "id":sliderDom.id,
                 "legende":sliderDom.dataset.legende,
-                "typeVal":sliderDom.dataset.typeVal,
                 "valeurMin": sliderDom.dataset.valeurMin,
                 "valeurMax":sliderDom.dataset.valeurMax,
                 "width":sliderDom.dataset.width,
@@ -80,6 +77,7 @@ class ObjectsKontrol{
 
             if (!this.contextAudio) {
                 paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":sliderDom.dataset.adresseOsc});
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"typeVal":sliderDom.dataset.typeVal});
             }
             paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
@@ -126,7 +124,6 @@ class ObjectsKontrol{
                 "legende":knobDom.dataset.legende,
                 "angleDepart":parseInt(knobDom.dataset.angleDepart),
                 "angleArrivee":parseInt(knobDom.dataset.angleArrivee),
-                "typeVal":knobDom.dataset.typeVal,
                 "valeurMin": knobDom.dataset.valeurMin,
                 "valeurMax":knobDom.dataset.valeurMax,
                 "valeur":parseFloat(knobDom.dataset.valeurInit),
@@ -138,6 +135,7 @@ class ObjectsKontrol{
 
             if (!this.contextAudio) {
                 paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":knobDom.dataset.adresseOsc});
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"typeVal":knobDom.dataset.typeVal});
             }
             paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
@@ -184,6 +182,7 @@ class ObjectsKontrol{
 
             if (!this.contextAudio) {
                 paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":bangDom.dataset.adresseOsc});
+                //typeVal forcément "i"
             }
             paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
@@ -219,6 +218,7 @@ class ObjectsKontrol{
 
             if (!this.contextAudio) {
                 paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":toggleDom.dataset.adresseOsc});
+                //typeVal forcément "i"
             }
             paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
@@ -264,6 +264,7 @@ class ObjectsKontrol{
 
             if (!this.contextAudio) {
                 paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":ledDom.dataset.adresseOsc});
+                //typeVal forcément "i"
             }
             paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
@@ -298,6 +299,7 @@ class ObjectsKontrol{
 
             if (!this.contextAudio) {
                 paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":outDom.dataset.adresseOsc});
+                //typeVal forcément "i"
             }
             paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
@@ -315,7 +317,7 @@ class ObjectsKontrol{
         }
     }
 
-    loadOscillators(contextAudio){
+    loadOscillators(){
         //on crée tous les oscillator présents dans le DOM
         let collOscillatorsDom = document.querySelectorAll(".oscillator");
 
@@ -339,6 +341,7 @@ class ObjectsKontrol{
 
             if (!this.contextAudio) {
                 paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":oscillatorDom.dataset.adresseOsc});
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"typeVal":oscillatorDom.dataset.typeVal});
             }
             paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
 
