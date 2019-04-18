@@ -13,16 +13,18 @@
 
 class ObjectsKontrol{
 
-    constructor(contextAudio) {
-        if(contextAudio){
-            this.contextAudio=contextAudio;
+    constructor(element) {
+
+        //element est soit un AudioContext soit un wsLink
+        if(element instanceof AudioContext){
+            this.contextAudio=element;
             this.paramContext = {
-                "contextAudio":contextAudio,
+                "contextAudio":element,
                 "onvaluechange":function(){}
             };
         }else{
             this.paramContext = {
-                "onvaluechange":function(param){sendValueOsc(param)}
+                "onvaluechange":function(param){element.sendValueOsc(param)}
             };
             //lancer fonction création ws
             //comment passer adresse et port du serveur avec qui on ouvre une webSocket ?
@@ -31,6 +33,7 @@ class ObjectsKontrol{
         this.collKnobs = [];
         this.collBangs = [];
         this.collToggles = [];
+        this.collLeds = [];
         this.collOuts = [];
         this.collOscillators = [];
     }
@@ -42,6 +45,7 @@ class ObjectsKontrol{
         this.loadKnobs();
         this.loadSliders();
         this.loadToggles();
+        this.loadLeds();
         this.loadOuts();
     }
 
@@ -86,9 +90,17 @@ class ObjectsKontrol{
                 slider = new Slider(paramObject);
             }
 
-
             slider.initInterface();
-            //ATTENTION penser à envoyer la valeur initiale si OSC
+
+            //on envoie la valeur initiale au serveur
+            if (!this.contextAudio) {
+                let param = {
+                    "adresseOsc":slider.adresseOsc,
+                    "typeVal":slider.typeVal,
+                    "value":slider.valueA
+                };
+                slider.onValueChange(param);
+            }
 
             //on ajoute le nouvel objet au tableau de sliders
             this.collSliders.push(slider);
@@ -132,7 +144,16 @@ class ObjectsKontrol{
             knob = new Knob(paramObject);
 
             knob.initInterface();
-            //ATTENTION penser à envoyer la valeur initiale si OSC
+
+            //on envoie la valeur initiale au serveur
+            if (!this.contextAudio) {
+                let param = {
+                    "adresseOsc":knob.adresseOsc,
+                    "typeVal":knob.typeVal,
+                    "value":knob.valeurA
+                };
+                knob.onValueChange(param);
+            }
 
             //on ajoute le nouvel objet au tableau des knobs
             this.collKnobs.push(knob);
@@ -205,9 +226,53 @@ class ObjectsKontrol{
 
             toggle.initInterface();
 
-            //ATTENTION penser à envoyer la valeur initiale si OSC
+            //on envoie la valeur initiale au serveur
+            if (!this.contextAudio) {
+                let param = {
+                    "adresseOsc":toggle.adresseOsc,
+                    "typeVal":"i",
+                    "value":toggle.etatToggle
+                };
+                toggle.onValueChange(param);
+            }
+
             //on ajoute le nouvel objet au tableau des toggles
             this.collToggles.push(toggle);
+        }
+    }
+
+    loadLeds(){
+        //on crée tous les objets Bang présents dans le DOM
+        let collLeds = document.querySelectorAll(".led");
+
+        //on récupère tous les objets du DOM de la classe bang
+        for (let ledDom of collLeds){
+            //pour chaque objet du DOM de la classe bang on crée un objet javascript bang
+
+            let led;
+
+            let paramObject ={
+
+                "elementDom":ledDom,
+                "id":ledDom.id,
+                "legende":ledDom.dataset.legende,
+                "width":ledDom.dataset.width,
+                "scale":parseFloat(ledDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
+                "styleBorder":ledDom.dataset.styleBorder,
+                "couleur":ledDom.dataset.couleur,
+            };
+
+            if (!this.contextAudio) {
+                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":ledDom.dataset.adresseOsc});
+            }
+            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+
+            led = new Led(paramObject);
+
+            led.initInterface();
+
+            //on ajoute le nouvel objet au tableau des bangs
+            this.collLeds.push(led);
         }
     }
 
@@ -296,17 +361,17 @@ class ObjectsKontrol{
         if (contextAudio) {
             for (let oscillator of this.collOscillators){
                 let id=oscillator.id+"-knobAmpl";
-                let knobAmpl=this.getObject("knob",id);
+                let knobAmpl=this.getObjectById("knob",id);
                 //on termine de configurer les différents objets
                 knobAmpl.onValueChange = function(param){oscillator.changeAmplitude(param.value)};
                 id=oscillator.id+"-knobFreq";
-                let knobFreq=this.getObject("knob",id);
+                let knobFreq=this.getObjectById("knob",id);
                 knobFreq.onValueChange = function(param){oscillator.changeFrequency(param.value)};
             }
         }
     }
 
-    getObject(type,id) {
+    getObjectById(type, id) {
 
         let collection;
 
@@ -339,6 +404,26 @@ class ObjectsKontrol{
                 break;
             }
         }
+    }
+
+    getObjectByAddressOsc(adr){
+
+        let collection=this.collLeds;
+
+        for (let element of collection) {
+            if (element.adresseOsc === adr) {
+                return element;
+                break;
+            }
+        }
+    }
+
+    receptionMessageOsc(addressOsc,messageOsc){
+
+        let object = this.getObjectByAddressOsc(addressOsc);
+
+        object.receptionMessageOsc(messageOsc);
+
     }
 
     static jsonConcat(o1, o2) {
