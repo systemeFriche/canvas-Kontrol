@@ -12,11 +12,11 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = merge(common,{
     mode:"production",
     output: {
-        path: path.resolve(__dirname, "./dist/js"),
-        filename: "./[name].[contentHash].bundle.js"
+        path: path.resolve(__dirname, "./dist"),
+        filename: "js/[name].[contentHash].bundle.js"
     },
     plugins: [
-        new MiniCssExtractPlugin({ filename: "../css/[name].[contentHash].css"}),
+        new MiniCssExtractPlugin({ filename: "css/[name].[contentHash].css"}),
         new HtmlWebpackPlugin({
             filename:"index_osc.html",
             template: "./src/template_osc.html"
