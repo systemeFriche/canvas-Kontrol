@@ -11,6 +11,16 @@
  * Big Thanks to Anne-Marie Puizillout
  */
 
+import Bang from "./bang"
+import Knob from "./knob"
+import Led from "./led"
+import OscillatorAudio from "./oscillatorAudio"
+import OutAudio from "./outAudio"
+import SliderAudio from "./sliderAudio"
+import Toggle from "./toggle"
+import Oscillator from "./oscillator";
+
+
 class ObjectsKontrol{
 
     constructor(element) {
@@ -277,7 +287,7 @@ class ObjectsKontrol{
         }
     }
 
-    loadOuts(contextAudio){
+    loadOuts(){
         //on crée tous les objets Bang présents dans le DOM
         let collOuts = document.querySelectorAll(".out");
 
@@ -430,9 +440,12 @@ class ObjectsKontrol{
     }
 
     static jsonConcat(o1, o2) {
-        for (var key in o2) {
+        for (let key in o2) {
             o1[key] = o2[key];
         }
         return o1;
     }
 }
+
+export default ObjectsKontrol;
+

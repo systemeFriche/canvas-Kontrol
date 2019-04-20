@@ -13,6 +13,7 @@
  * Big Thanks to Anne-Marie Puizillout
  */
 
+import rectArrondi from "./canvas"
 
 class Toggle
 {
@@ -93,5 +94,7 @@ class Toggle
         this.ctx.fillText(this.legende, 150, 25);
     }
 }
+
+export default Toggle;
 
 

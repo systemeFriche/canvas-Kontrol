@@ -174,3 +174,5 @@ class Slider
         this.ctx.fillText(this.valeurMax, 87, 60);
     }
 }
+
+export default Slider;

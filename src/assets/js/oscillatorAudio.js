@@ -12,6 +12,8 @@
  * Big Thanks to Anne-Marie Puizillout
  */
 
+import Oscillator from "./oscillator"
+
 class OscillatorAudio extends Oscillator {
 
     constructor(param) {
@@ -79,6 +81,7 @@ class OscillatorAudio extends Oscillator {
     }
 }
 
+export default OscillatorAudio;
 
 
 

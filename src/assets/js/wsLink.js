@@ -1,4 +1,4 @@
-class wsLink
+class WsLink
 {
     constructor(wsServer,wsPort) {
         //on définit la websocket
@@ -34,4 +34,6 @@ class wsLink
         })
     }
 }
+
+export default WsLink;
 

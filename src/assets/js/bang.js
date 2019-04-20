@@ -94,4 +94,6 @@ class Bang
     }
 }
 
+export default Bang;
+
 

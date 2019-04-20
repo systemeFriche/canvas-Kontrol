@@ -12,6 +12,8 @@
  * Big Thanks to Anne-Marie Puizillout
  */
 
+import Out from "./out"
+
 class OutAudio extends Out {
 
     constructor(param) {
@@ -43,6 +45,9 @@ class OutAudio extends Out {
     }
 
 }
+
+export default OutAudio;
+
 
 
 

@@ -89,4 +89,6 @@ class Led
     }
 }
 
+export default Led;
+
 

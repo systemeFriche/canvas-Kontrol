@@ -12,7 +12,9 @@
  * Big Thanks to Anne-Marie Puizillout
  */
 
-//ChangeType, on avait méthode on et off
+import "../css/oscillator.css";
+
+import Draw from "./draw"
 
 class Oscillator {
 
@@ -298,6 +300,9 @@ class Oscillator {
     }
 
 }
+
+export default Oscillator;
+
 
 
 

@@ -12,6 +12,8 @@
  * Big Thanks to Anne-Marie Puizillout
  */
 
+import Slider from "./slider"
+
 class SliderAudio extends Slider {
 
     constructor(param) {
@@ -53,6 +55,9 @@ class SliderAudio extends Slider {
         //this.amplitude=amplitude;
     }
 }
+
+export default SliderAudio;
+
 
 
 

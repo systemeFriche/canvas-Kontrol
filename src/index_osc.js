@@ -1,14 +1,15 @@
-//require("../node_modules/osc/dist/osc");
-require("../node_modules/osc/dist/osc-browser");
-require("./assets/js/wsLink");
-require("./assets/js/objectsKontrol");
+//import du style
+import "./assets/css/style.css";
 
+//require("../node_modules/osc/dist/osc");
+import WsLink from "./assets/js/wsLink";
+import ObjectsKontrol from "./assets/js/objectsKontrol";
 
 //connexion websocket
 let divContainer = document.getElementById("container");
 let webSocketServer=divContainer.dataset.webSocketServer;
 let webSocketPort=divContainer.dataset.webSocketPort;
-let wsLink1 = new wsLink(webSocketServer,webSocketPort);
+let wsLink1 = new WsLink(webSocketServer,webSocketPort);
 
 //initialisation objectsKontrol
 let objetsK = new ObjectsKontrol(wsLink1);

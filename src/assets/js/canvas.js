@@ -12,3 +12,5 @@ function rectArrondi(ctx, x, y, largeur, hauteur, rayon) {
     ctx.closePath();
     ctx.fill();
 }
+
+export default rectArrondi;

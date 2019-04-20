@@ -126,6 +126,6 @@ class Draw{
         xRad=(x-x0)/width*Math.PI * 2;
         return xRad;
     }
-
-
 }
+
+export default Draw;
