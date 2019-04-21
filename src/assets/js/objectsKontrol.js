@@ -13,13 +13,14 @@
 
 import Bang from "./bang"
 import Knob from "./knob"
-import Led from "./led"
-import OscillatorAudio from "./oscillatorAudio"
-import OutAudio from "./outAudio"
+import Slider from "./slider"
 import SliderAudio from "./sliderAudio"
 import Toggle from "./toggle"
-import Oscillator from "./oscillator";
-
+import Led from "./led"
+import Oscillator from "./oscillator"
+import OscillatorAudio from "./oscillatorAudio"
+import Out from "./out.js"
+import OutAudio from "./outAudio"
 
 class ObjectsKontrol{
 

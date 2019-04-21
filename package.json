@@ -16,6 +16,7 @@
     "HTML"
   ],
   "scripts": {
+    "start_simple": "webpack --config webpack.dev.js",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
