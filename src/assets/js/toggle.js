@@ -67,8 +67,12 @@ class Toggle
 
         let param = {
             "adresseOsc":this.adresseOsc,
-            "typeVal":"i",
-            "value":this.etatToggle
+            args:[
+                {
+                    "type":"i",
+                    "value":this.etatToggle
+                },
+            ]
         };
 
         this.onValueChange(param);

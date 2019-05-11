@@ -52,8 +52,12 @@ class Out
 
         let param = {
             "adresseOsc":this.adresseOsc,
-            "typeVal":"i",
-            "value":1
+            args:[
+                {
+                    "type":"i",
+                    "value":1
+                },
+            ]
         };
         this.onValueChange(param);
     }
@@ -63,8 +67,12 @@ class Out
 
         let param = {
             "adresseOsc":this.adresseOsc,
-            "typeVal":"i",
-            "value":0
+            args:[
+                {
+                    "type":"i",
+                    "value":0
+                },
+            ]
         };
         this.onValueChange(param);
     }

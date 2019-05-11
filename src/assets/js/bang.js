@@ -50,10 +50,15 @@ class Bang
     {
         this.drawCercle();
         this.drawBang();
+
         let param = {
             "adresseOsc":this.adresseOsc,
-            "typeVal":"i",
-            "value":"1"
+            args:[
+                {
+                    "type":"i",
+                    "value":"1"
+                },
+            ]
         };
         this.onValueChange(param);
         //on efface 100 ms plus tard

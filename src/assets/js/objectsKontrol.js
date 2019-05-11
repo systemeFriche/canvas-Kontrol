@@ -21,6 +21,7 @@ import Oscillator from "./oscillator"
 import OscillatorAudio from "./oscillatorAudio"
 import Out from "./out.js"
 import OutAudio from "./outAudio"
+import Piano from "./piano"
 
 class ObjectsKontrol{
 
@@ -45,6 +46,7 @@ class ObjectsKontrol{
         this.collLeds = [];
         this.collOuts = [];
         this.collOscillators = [];
+        this.collPianos = [];
     }
 
     loadObjects(){
@@ -56,6 +58,7 @@ class ObjectsKontrol{
         this.loadToggles();
         this.loadLeds();
         this.loadOuts();
+        this.loadPianos();
     }
 
     configureObjects(){
@@ -87,10 +90,10 @@ class ObjectsKontrol{
             };
 
             if (!this.contextAudio) {
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":sliderDom.dataset.adresseOsc});
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"typeVal":sliderDom.dataset.typeVal});
+                paramObject=this.jsonConcat(paramObject,{"adresseOsc":sliderDom.dataset.adresseOsc});
+                paramObject=this.jsonConcat(paramObject,{"typeVal":sliderDom.dataset.typeVal});
             }
-            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+            paramObject=this.jsonConcat(paramObject,this.paramContext);
 
             if (this.contextAudio){
                 slider = new SliderAudio(paramObject);
@@ -105,8 +108,12 @@ class ObjectsKontrol{
             if (!this.contextAudio) {
                 let param = {
                     "adresseOsc":slider.adresseOsc,
-                    "typeVal":slider.typeVal,
-                    "value":slider.valueA
+                    args:[
+                        {
+                            "type":slider.typeVal,
+                            "value":slider.valueA
+                        },
+                    ]
                 };
                 slider.onValueChange(param);
             }
@@ -145,10 +152,10 @@ class ObjectsKontrol{
             };
 
             if (!this.contextAudio) {
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":knobDom.dataset.adresseOsc});
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"typeVal":knobDom.dataset.typeVal});
+                paramObject=this.jsonConcat(paramObject,{"adresseOsc":knobDom.dataset.adresseOsc});
+                paramObject=this.jsonConcat(paramObject,{"typeVal":knobDom.dataset.typeVal});
             }
-            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+            paramObject=this.jsonConcat(paramObject,this.paramContext);
 
             knob = new Knob(paramObject);
 
@@ -158,8 +165,12 @@ class ObjectsKontrol{
             if (!this.contextAudio) {
                 let param = {
                     "adresseOsc":knob.adresseOsc,
-                    "typeVal":knob.typeVal,
-                    "value":knob.valeurA
+                    args:[
+                        {
+                            "type":knob.typeVal,
+                            "value":knob.valeurA
+                        },
+                    ]
                 };
                 knob.onValueChange(param);
             }
@@ -192,10 +203,10 @@ class ObjectsKontrol{
             };
 
             if (!this.contextAudio) {
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":bangDom.dataset.adresseOsc});
+                paramObject=this.jsonConcat(paramObject,{"adresseOsc":bangDom.dataset.adresseOsc});
                 //typeVal forcément "i"
             }
-            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+            paramObject=this.jsonConcat(paramObject,this.paramContext);
 
             bang = new Bang(paramObject);
 
@@ -228,10 +239,10 @@ class ObjectsKontrol{
             };
 
             if (!this.contextAudio) {
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":toggleDom.dataset.adresseOsc});
+                paramObject=this.jsonConcat(paramObject,{"adresseOsc":toggleDom.dataset.adresseOsc});
                 //typeVal forcément "i"
             }
-            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+            paramObject=this.jsonConcat(paramObject,this.paramContext);
 
             toggle = new Toggle(paramObject);
 
@@ -241,8 +252,12 @@ class ObjectsKontrol{
             if (!this.contextAudio) {
                 let param = {
                     "adresseOsc":toggle.adresseOsc,
-                    "typeVal":"i",
-                    "value":toggle.etatToggle
+                    args:[
+                        {
+                            "type":"i",
+                            "value":toggle.etatToggle
+                        },
+                    ]
                 };
                 toggle.onValueChange(param);
             }
@@ -274,10 +289,10 @@ class ObjectsKontrol{
             };
 
             if (!this.contextAudio) {
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":ledDom.dataset.adresseOsc});
+                paramObject=this.jsonConcat(paramObject,{"adresseOsc":ledDom.dataset.adresseOsc});
                 //typeVal forcément "i"
             }
-            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+            paramObject=this.jsonConcat(paramObject,this.paramContext);
 
             led = new Led(paramObject);
 
@@ -309,10 +324,10 @@ class ObjectsKontrol{
             };
 
             if (!this.contextAudio) {
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":outDom.dataset.adresseOsc});
+                paramObject=this.jsonConcat(paramObject,{"adresseOsc":outDom.dataset.adresseOsc});
                 //typeVal forcément "i"
             }
-            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+            paramObject=this.jsonConcat(paramObject,this.paramContext);
 
             if (this.contextAudio){
                 out = new OutAudio(paramObject);
@@ -351,10 +366,10 @@ class ObjectsKontrol{
             };
 
             if (!this.contextAudio) {
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"adresseOsc":oscillatorDom.dataset.adresseOsc});
-                paramObject=ObjectsKontrol.jsonConcat(paramObject,{"typeVal":oscillatorDom.dataset.typeVal});
+                paramObject=this.jsonConcat(paramObject,{"adresseOsc":oscillatorDom.dataset.adresseOsc});
+                paramObject=this.jsonConcat(paramObject,{"typeVal":oscillatorDom.dataset.typeVal});
             }
-            paramObject=ObjectsKontrol.jsonConcat(paramObject,this.paramContext);
+            paramObject=this.jsonConcat(paramObject,this.paramContext);
 
             if (this.contextAudio){
                 oscillator = new OscillatorAudio(paramObject);
@@ -385,7 +400,46 @@ class ObjectsKontrol{
         }
     }
 
-    getObjectById(type, id) {
+    loadPianos(){
+        //on crée tous les oscillator présents dans le DOM
+        let collPianosDom = document.querySelectorAll(".piano");
+
+        //on récupère tous les objets du DOM de la classe oscillator
+        for (let pianoDom of collPianosDom) {
+            //pour chaque objet du DOM de la classe oscillator on crée un objet javascript oscillator
+            let piano;
+
+            let paramObject = {
+                "elementDom": pianoDom,
+                "id": pianoDom.id,
+                "width": pianoDom.dataset.width,
+                "scale": parseFloat(pianoDom.dataset.width / 1050),//le elementDom de base a été créé pour une largeur de 15 touches blanches de 70 pixels
+                "styleBorder": pianoDom.dataset.styleBorder,
+                "couleur": pianoDom.dataset.couleur,
+            };
+
+            if (!this.contextAudio) {
+                paramObject = this.jsonConcat(paramObject, {"adresseOsc": pianoDom.dataset.adresseOsc});
+                //typeVal = String
+                //paramObject=this.jsonConcat(paramObject,{"typeVal":pianoDom.dataset.typeVal});
+            }
+            paramObject = this.jsonConcat(paramObject, this.paramContext);
+
+            if (this.contextAudio) {
+                //oscillator = new OscillatorAudio(paramObject);
+            } else {
+                piano = new Piano(paramObject);
+            }
+
+            piano.initInterface();
+            //ATTENTION penser à envoyer la valeur initiale si OSC
+            //on ajoute le nouvel objet au tableau des oscillators
+            this.collPianos.push(piano);
+
+        }
+    }
+
+    getObjectById(type, id){
 
         let collection;
 
@@ -440,7 +494,7 @@ class ObjectsKontrol{
 
     }
 
-    static jsonConcat(o1, o2) {
+    jsonConcat(o1, o2){
         for (let key in o2) {
             o1[key] = o2[key];
         }

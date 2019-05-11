@@ -25,15 +25,14 @@ class WsLink
     }
 
     sendValueOsc(param) {
-        console.log("SENT : adresse OSC :"+param.adresseOsc + ",type valeur " +param.typeVal+",valeur : "+param.value);
+        let message="";
+        for (let arg of param.args){
+            message+=",type valeur " + arg.type+",valeur : "+arg.value;
+        }
+        console.log("SENT : adresse OSC :"+param.adresseOsc + message);
         this.ws.send({
             address: param.adresseOsc,
-            args: [
-                {
-                    type: param.typeVal,
-                    value: param.value
-                }
-            ]
+            args: param.args
         })
     }
 }
