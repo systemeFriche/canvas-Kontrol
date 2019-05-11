@@ -237,10 +237,16 @@ class Oscillator {
 
     on() {
         //envoi message Osc pour indiquer qu'on veut jouer le son de l'oscillateur
+
+
         let param = {
             "adresseOsc":this.adresseOsc+"/on",
-            "typeVal":"i",
-            "value":1
+            args:[
+                {
+                    "type":"i",
+                    "value":1
+                },
+            ]
         };
         this.onValueChange(param);
     }
@@ -249,8 +255,12 @@ class Oscillator {
         //envoi message Osc pour indiquer qu'on veut stopper le son de l'oscillateur
         let param = {
             "adresseOsc":this.adresseOsc+"/on",
-            "typeVal":"i",
-            "value":0
+            args:[
+                {
+                    "type":"i",
+                    "value":0
+                },
+            ]
         };
         this.onValueChange(param);
     }
@@ -292,8 +302,12 @@ class Oscillator {
         }
         let param = {
             "adresseOsc":this.adresseOsc+"/type",
-            "typeVal":"i",
-            "value":value
+            args:[
+                {
+                    "type":"i",
+                    "value":value
+                },
+            ]
         };
         this.onValueChange(param);
         this.drawOscillator();

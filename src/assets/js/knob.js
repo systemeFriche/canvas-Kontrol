@@ -77,10 +77,15 @@ class Knob
     {
         this.valeurB=val;
         this.drawKnob();
+
         let param = {
             "adresseOsc":this.adresseOsc,
-            "typeVal":this.typeVal,
-            "value":val
+            args:[
+                {
+                    "type":this.typeVal,
+                    "value":val
+                },
+            ]
         };
         this.onValueChange(param);
     }

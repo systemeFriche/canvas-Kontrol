@@ -74,8 +74,12 @@ class Slider
         if(this.adresseOsc){
             let param = {
                 "adresseOsc":this.adresseOsc,
-                "typeVal":this.typeVal,
-                "value":this.valueB
+                args:[
+                    {
+                        "type":this.typeVal,
+                        "value":this.valueB
+                    },
+                ]
             };
             this.onValueChange(param);
         }
