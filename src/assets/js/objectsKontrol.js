@@ -415,6 +415,7 @@ class ObjectsKontrol{
                 "width": pianoDom.dataset.width,
                 "scale": parseFloat(pianoDom.dataset.width / 1050),//le elementDom de base a été créé pour une largeur de 15 touches blanches de 70 pixels
                 "styleBorder": pianoDom.dataset.styleBorder,
+                "legende": pianoDom.dataset.legende,
                 "couleur": pianoDom.dataset.couleur,
             };
 
