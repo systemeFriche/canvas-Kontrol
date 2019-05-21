@@ -28,7 +28,7 @@ class ObjectsKontrol{
     constructor(element) {
 
         //element est soit un AudioContext soit un wsLink
-        if(element instanceof AudioContext){
+        if(element instanceof ((window.AudioContext) || (window.webkitAudioContext))){
             this.contextAudio=element;
             this.paramContext = {
                 "contextAudio":element,
@@ -86,7 +86,7 @@ class ObjectsKontrol{
                 "valeur":parseFloat(sliderDom.dataset.valeurInit),
                 "scaleX":parseFloat(sliderDom.dataset.width/100.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
                 "scaleY":parseFloat(sliderDom.dataset.height/300.0),//le elementDom de base a été créé dans un rectangle de 100 pixels par 300 pixels
-                "couleur":sliderDom.dataset.couleur,
+                "couleur":sliderDom.dataset.couleur
             };
 
             if (!this.contextAudio) {
@@ -148,7 +148,7 @@ class ObjectsKontrol{
                 "width":knobDom.dataset.width,
                 "height":knobDom.dataset.width,
                 "scale":parseFloat(knobDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
-                "couleur":knobDom.dataset.couleur,
+                "couleur":knobDom.dataset.couleur
             };
 
             if (!this.contextAudio) {
@@ -199,7 +199,7 @@ class ObjectsKontrol{
                 "width":bangDom.dataset.width,
                 "scale":parseFloat(bangDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":bangDom.dataset.styleBorder,
-                "couleur":bangDom.dataset.couleur,
+                "couleur":bangDom.dataset.couleur
             };
 
             if (!this.contextAudio) {
@@ -235,7 +235,7 @@ class ObjectsKontrol{
                 "width":toggleDom.dataset.width,
                 "scale":parseFloat(toggleDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":toggleDom.dataset.styleBorder,
-                "couleur":toggleDom.dataset.couleur,
+                "couleur":toggleDom.dataset.couleur
             };
 
             if (!this.contextAudio) {
@@ -285,7 +285,7 @@ class ObjectsKontrol{
                 "width":ledDom.dataset.width,
                 "scale":parseFloat(ledDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":ledDom.dataset.styleBorder,
-                "couleur":ledDom.dataset.couleur,
+                "couleur":ledDom.dataset.couleur
             };
 
             if (!this.contextAudio) {
@@ -320,7 +320,7 @@ class ObjectsKontrol{
                 "height":outDom.dataset.height,
                 "scale":parseFloat(outDom.dataset.width/300.0),//le elementDom de base a été créé dans un carré de 300 pixels de côté
                 "styleBorder":outDom.dataset.styleBorder,
-                "couleur":outDom.dataset.couleur,
+                "couleur":outDom.dataset.couleur
             };
 
             if (!this.contextAudio) {
@@ -362,7 +362,7 @@ class ObjectsKontrol{
                 "valeurMinAmpl": oscillatorDom.dataset.valeurMinAmpl,
                 "valeurMaxAmpl":oscillatorDom.dataset.valeurMaxAmpl,
                 "amplitude":oscillatorDom.dataset.amplitude,
-                "scale":parseFloat(oscillatorDom.height/100.0),//la hauteur de base vaut 100 pixels
+                "scale":parseFloat(oscillatorDom.height/100.0)//la hauteur de base vaut 100 pixels
             };
 
             if (!this.contextAudio) {
@@ -415,8 +415,8 @@ class ObjectsKontrol{
                 "width": pianoDom.dataset.width,
                 "scale": parseFloat(pianoDom.dataset.width / 1050),//le elementDom de base a été créé pour une largeur de 15 touches blanches de 70 pixels
                 "styleBorder": pianoDom.dataset.styleBorder,
-                "legende": pianoDom.dataset.legende,
-                "couleur": pianoDom.dataset.couleur,
+                "legende":pianoDom.dataset.legende,
+                "couleur": pianoDom.dataset.couleur
             };
 
             if (!this.contextAudio) {
