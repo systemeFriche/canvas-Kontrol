@@ -137,6 +137,7 @@ Chaque objet d'interface est paramétrable à l'aide d'attributs de la balise di
 * **class** : piano
 * **data-width** : en pixels
 * **data-style-border** : pour définir éventuellement le style de la bordure de l'objet
+* **data-legende** : true ou false, pour définir l'affichage du nom des notes
 * **data-adresse-OSC** : adresse OSC de destination de l'état des touches appuyées et relachées. Exemple : "/piano". 
 * **data-type-couleur** : couleur des touches appuyées. Exemple : "rgba(222,184,0,0.5)".
 

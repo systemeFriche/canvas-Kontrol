@@ -25,6 +25,8 @@ class Piano
         //this.sourisX=0;
         this.couleur=param.couleur;
         this.onValueChange=param.onvaluechange || function(){};
+        this.legende=param.legende;
+        console.log("légende:"+this.legende);
 
         this.notesArray = [
             {note:"DO3",whitePressed:false,blackPressed:false},
