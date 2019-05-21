@@ -44,17 +44,22 @@ class Piano
             {note:"DO5",whitePressed:false,blackPressed:false},
         ];
 
-        this.numberWhiteNotes=15;
-        this.noteWhiteWidth = 70;
-        this.noteBlackWidth=40;
-        this.noteBlackHeight=250;
-        this.whiteHeight=400;
+
 
         //this.ctx.scale(param.scale,param.scale);
         this.onValueChange=param.onvaluechange || function(){};
         this.width=param.width;
         this.scale=param.scale;
-        this.height=this.scale*this.whiteHeight;
+        this.height=Math.round(this.scale*this.width);
+
+        this.numberWhiteNotes=15;
+        this.noteWhiteWidth=70;
+        this.noteBlackWidth=40;
+        this.noteBlackHeight=250;
+        this.whiteHeight=400;
+
+        //légende
+        this.font="8pt Verdana";
 
         this.adresseOsc=param.adresseOsc;
     }
@@ -88,8 +93,6 @@ class Piano
         // draw piano notes
         for( let i = 0; i < this.numberWhiteNotes; i++ ) {
 
-
-
             // border
             this.ctx.lineWidth=2;
             this.ctx.strokeStyle="rgba(0,0,0,1)";
@@ -108,14 +111,14 @@ class Piano
             if(i>0){
                 //si touche noire avant
                 if(typeof this.notesArray[i-1].blackPressed !== "undefined"){
-                    wLeft=this.noteBlackWidth/2;
+                    wLeft=Math.round(this.noteBlackWidth/2);
                 }
             }
 
             if(i<this.numberWhiteNotes-1){
                 //si touche noire après
                 if(typeof this.notesArray[i].blackPressed !== "undefined"){
-                    wRight=this.noteBlackWidth/2;
+                    wRight=Math.round(this.noteBlackWidth/2);
                 }
             }
             this.ctx.moveTo(this.noteWhiteWidth * i +wLeft,0);
@@ -130,7 +133,16 @@ class Piano
             this.ctx.fill();
             this.ctx.stroke();
 
-            // black notes
+            //ajout légende
+            if(this.legende==="true"){
+                this.ctx.font = this.font;
+                this.ctx.textAlign = "center";
+                this.ctx.textBaseline = "middle";
+                this.ctx.fillStyle = "rgba(0,0,0,1)";
+                this.ctx.fillText(this.notesArray[i].note, this.noteWhiteWidth *i+this.noteWhiteWidth/2, this.whiteHeight-10);
+            }
+
+            // touches noires
             //on ne dessine pas la touche noire (si touche noire) de la dernière touche blanche
             if(i<this.numberWhiteNotes-1){
                 if(typeof this.notesArray[i].blackPressed !== "undefined"){
@@ -143,6 +155,16 @@ class Piano
                     this.ctx.rect( this.noteWhiteWidth * (i+1) - this.noteBlackWidth/2, 0, this.noteBlackWidth, this.noteBlackHeight);
                     this.ctx.fill();
                     this.ctx.stroke();
+
+                    //ajout légende
+                    if (this.legende==="true"){
+                        this.ctx.font = this.font;
+                        this.ctx.textAlign = "center";
+                        this.ctx.textBaseline = "middle";
+                        this.ctx.fillStyle = "rgba(255,255,255,1)";
+                        this.ctx.fillText(this.notesArray[i].note+"#", this.noteWhiteWidth *(i+1), this.noteBlackHeight-10);
+
+                    }
                 }
             }
         }
@@ -150,36 +172,40 @@ class Piano
 
     updatePianoState(e){
         // on récupère les cordonnées du clic
-        let xPos = e.offsetX;
-        let yPos = e.offsetY;
+        let xPos = Math.round(e.offsetX/this.scale);
+        let yPos = Math.round(e.offsetY/this.scale);
 
-        let state = 0;
+        let iFloat = xPos/this.noteWhiteWidth;
+        let i;
 
         // on a cliqué sur une touche noire
         if( yPos < this.noteBlackHeight ) {
-            for(let i = 0 ; i < this.numberWhiteNotes; i++) {
-                if( xPos > ( (i+1) * this.noteWhiteWidth - this.noteBlackWidth/2 ) && xPos < ( (i+1) * this.noteWhiteWidth + this.noteBlackWidth/2 ) && this.notesArray[ i ].blackPressed!=="undefined" ) {
-                    if (this.notesArray[i].blackPressed===false){
-                        this.notesArray[i].blackPressed=true;
+
+            i = Math.round(iFloat);
+            let ratio=(this.noteBlackWidth/2)/this.noteWhiteWidth;
+
+            if(iFloat>=(i-ratio) && iFloat<=(i+ratio)){
+                if(typeof this.notesArray[i-1].blackPressed !== "undefined"){
+                    if (this.notesArray[i-1].blackPressed===false){
+                        this.notesArray[i-1].blackPressed=true;
                     }
                     else{
-                        this.notesArray[i].blackPressed=false;
+                        this.notesArray[i-1].blackPressed=false;
                     }
-                    this.onTouchChange(this.notesArray[i],"b");
+                    this.onTouchChange(this.notesArray[i-1],"b");
                 }
             }
         } else { // on a cliqué sur une touche blanche
-            for(let i = 0 ; i < this.numberWhiteNotes; i++) {
-                if( xPos > ( i * this.noteWhiteWidth ) && xPos < ( (i+1) * this.noteWhiteWidth ) ) {
-                    if (this.notesArray[i].whitePressed===false){
-                        this.notesArray[i].whitePressed=true;
-                    }
-                    else{
-                        this.notesArray[i].whitePressed=false;
-                    }
-                    this.onTouchChange(this.notesArray[i],"w");
-                }
+
+            i = Math.trunc(iFloat);
+
+            if (this.notesArray[i].whitePressed===false){
+                this.notesArray[i].whitePressed=true;
             }
+            else{
+                this.notesArray[i].whitePressed=false;
+            }
+            this.onTouchChange(this.notesArray[i],"w");
         }
     }
 
