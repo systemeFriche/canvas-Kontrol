@@ -46,19 +46,17 @@ class Piano
             {note:"DO5",whitePressed:false,blackPressed:false},
         ];
 
-
-
-        //this.ctx.scale(param.scale,param.scale);
-        this.onValueChange=param.onvaluechange || function(){};
-        this.width=param.width;
-        this.scale=param.scale;
-        this.height=Math.round(this.scale*this.width);
-
         this.numberWhiteNotes=15;
         this.noteWhiteWidth=70;
         this.noteBlackWidth=40;
         this.noteBlackHeight=250;
         this.whiteHeight=400;
+
+        //this.ctx.scale(param.scale,param.scale);
+        this.onValueChange=param.onvaluechange || function(){};
+        this.width=param.width;
+        this.scale=param.scale;
+        this.height=Math.round(this.scale*this.whiteHeight);
 
         //légende
         this.font="8pt Verdana";
